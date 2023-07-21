@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const TemperatureConverter = () => {
+  // Les hooks d'état pour gérer les valeurs du formulaire et le résultat
   const [inputValue, setInputValue] = useState("");
   const [sourceUnit, setSourceUnit] = useState("Celsius");
   const [targetUnit, setTargetUnit] = useState("Fahrenheit");
@@ -8,40 +9,47 @@ const TemperatureConverter = () => {
 
   // Fonction de conversion de température
   const convertTemperature = (value, source, target) => {
+    // Vérifier si la valeur saisie est un nombre
     if (isNaN(value)) return "";
 
+    // Définition des fonctions de conversion pour Celsius vers Fahrenheit et vice versa
     const celsiusToFahrenheit = (celsius) => (celsius * 9) / 5 + 32;
     const fahrenheitToCelsius = (fahrenheit) => ((fahrenheit - 32) * 5) / 9;
 
+    // Appliquer la conversion en fonction de l'unité source et de l'unité cible
     if (source === "Celsius" && target === "Fahrenheit") {
-      return celsiusToFahrenheit(value).toFixed(2);
+      return celsiusToFahrenheit(value).toFixed(2); // Arrondir le résultat à deux décimales
     } else if (source === "Fahrenheit" && target === "Celsius") {
       return fahrenheitToCelsius(value).toFixed(2);
     } else {
-      return value;
+      return value; // Si les unités sont identiques, retourner la valeur inchangée
     }
   };
 
+  // Gérer le changement de la valeur saisie
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
+  // Gérer le changement de l'unité source
   const handleSourceUnitChange = (e) => {
     setSourceUnit(e.target.value);
   };
 
+  // Gérer le changement de l'unité cible
   const handleTargetUnitChange = (e) => {
     setTargetUnit(e.target.value);
   };
 
+  // Gérer la soumission du formulaire de conversion
   const handleConvert = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Empêcher le rechargement de la page
     const convertedValue = convertTemperature(
-      parseFloat(inputValue),
+      parseFloat(inputValue), // Convertir la valeur saisie en nombre
       sourceUnit,
       targetUnit
     );
-    setResult(convertedValue);
+    setResult(convertedValue); // Mettre à jour le résultat de la conversion
   };
 
   return (
